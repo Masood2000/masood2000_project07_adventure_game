@@ -1,11 +1,7 @@
 #! /usr/bin/env node
-import * as readline from 'readline';
-import * as process from 'process';
 import inquirer from 'inquirer';
-var r3 = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
+import promptSync from 'prompt-sync';
+const prompt = promptSync();
 //Game Variables ............
 let enemies = ["Skeleton", "Zombie", "Warrior", "Assasin"];
 let maxEnemy = 75;
@@ -20,7 +16,7 @@ let enemyHealth;
 let index;
 let enemy;
 read();
-async function read() {
+function read() {
     console.log("................ Wellcome to the Game .......................");
     let running = true;
     GAME: while (running) {
@@ -29,17 +25,44 @@ async function read() {
         enemy = enemies[index];
         console.log("--------------------------------------------------------------");
         console.log(`\t# ${enemy} Appeared! #\n`);
-        await twoWhile();
-        running = false;
-    }
-}
-async function twoWhile() {
-    while (enemyHealth > 0) {
-        await start();
-        if (enemyHealth < 1) {
-            break;
+        while (enemyHealth > 0) {
+            console.log(`\tYour HP: ${Math.trunc(health)}`);
+            console.log(`\t${enemy}'s HP : ${Math.trunc(enemyHealth)}`);
+            console.log(`\n\tWhat would you like to do? `);
+            console.log("1>Attack\n2>Drink Health Portion\n3>Run!\n");
+            const input = prompt(">");
+            if (input.toString() == "1") {
+                let demageDealt = Math.trunc(Math.random() * attackDemage);
+                let demageTaken = Math.trunc(Math.random() * enemyAttackDemage);
+                enemyHealth = enemyHealth - demageDealt;
+                health = health - demageTaken;
+                console.log(`\t> You Strike the ${enemy} for ${demageDealt}  damage .`);
+                console.log(`\t> You Recieved the ${demageTaken} in Retaliation .\n`);
+                if (health < 1) {
+                    console.log(`\t> You have taken too much damage, you are too weak to go on! `);
+                }
+            }
+            else if (input == "2") {
+                if (healthPots > 0) {
+                    health += heatlhPotionHealAmount;
+                    healthPots--;
+                    console.log(`\t> You drink a Health portion, Healing yourself for ${heatlhPotionHealAmount}.\n\tYou know have ${health} HP.\n\tYou know have ${healthPots} Left. `);
+                }
+                else {
+                    console.log(`\t> You have no Health Portions Left. `);
+                }
+            }
+            else if (input == "3") {
+                console.log(`\t> You run away from the ${enemy}`);
+                enemyHealth = 0;
+            }
+            if (enemyHealth < 1) {
+                break;
+            }
         }
     }
+}
+function twoWhile() {
 }
 async function start() {
     console.log(`\tYour HP: ${Math.trunc(health)}`);
@@ -91,4 +114,6 @@ async function start() {
             read();
         }
     });
+}
+async function start2() {
 }

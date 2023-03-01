@@ -3,11 +3,10 @@
   "version": "1.0.1",
   "description": "",
   "main": "index.js",
-  
-  "type":"module",
-  "bin":{
-    "masood2000_project07_adventure_game":"bin/index.js"
-      },
+  "type": "module",
+  "bin": {
+    "masood2000_project07_adventure_game": "bin/index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,9 +17,11 @@
     "@types/chalk-animation": "^1.6.1",
     "@types/inquirer": "^9.0.3",
     "@types/node": "^18.14.0",
+    "@types/prompt-sync": "^4.2.0",
     "chalk": "^5.2.0",
     "chalk-animation": "^2.0.3",
     "inquirer": "^9.1.4",
+    "prompt-sync": "^4.2.0",
     "readline": "^1.3.0"
   }
 }
